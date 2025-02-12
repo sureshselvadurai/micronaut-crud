@@ -17,32 +17,46 @@ dependencies {
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
 
-    //jdbc
+    // JDBC + Hikari
     implementation("io.micronaut.data:micronaut-data-jdbc")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     runtimeOnly("mysql:mysql-connector-java")
 
-    // flyway
+    // Flyway
     implementation("io.micronaut.flyway:micronaut-flyway")
     implementation("org.flywaydb:flyway-mysql")
 
-    // lombok
+    // Lombok
     compileOnly "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok"
 
-    // yaml instead of properties
+    // YAML instead of properties
     runtimeOnly("org.yaml:snakeyaml")
-}
 
+    // Testing dependencies
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
+    // TestContainers
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:mysql")
+}
 
 application {
     mainClass = "com.piyal.Application"
 }
+
 java {
     sourceCompatibility = JavaVersion.toVersion("21")
     targetCompatibility = JavaVersion.toVersion("21")
 }
 
+// Ensures tests run with JUnit 5
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
 
 graalvmNative.toolchainDetection = false
 
@@ -54,8 +68,6 @@ micronaut {
         annotations("com.piyal.*")
     }
     aot {
-        // Please review carefully the optimizations enabled below
-        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
         optimizeServiceLoading = false
         convertYamlToJava = false
         precomputeOperations = true
@@ -67,10 +79,6 @@ micronaut {
     }
 }
 
-
 tasks.named("dockerfileNative") {
     jdkVersion = "21"
 }
-
-
-
