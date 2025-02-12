@@ -1,0 +1,16 @@
+micronaut:
+  application:
+    name: micronaut-crud
+
+datasources:
+  default:
+    url: jdbc:tc:mysql:8.0.32:///testdb
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    dialect: MYSQL
+    driver: com.mysql.cj.jdbc.Driver
+    schema-generate: NONE
+    db-type: mysql
+    migration:
+      enabled: true
