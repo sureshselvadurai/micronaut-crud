@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import jakarta.inject.Inject;
+import org.testcontainers.Testcontainers;
 
 @MicronautTest
 class ApplicationTest {
