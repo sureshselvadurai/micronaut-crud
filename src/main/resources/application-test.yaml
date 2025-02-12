@@ -4,13 +4,22 @@ micronaut:
 
 datasources:
   default:
-    url: jdbc:tc:mysql:8.0.32:///testdb
+    url: jdbc:tc:mysql:8.0.32:///testdb  # Testcontainers JDBC URL
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: root
     dialect: MYSQL
-    driver: com.mysql.cj.jdbc.Driver
     schema-generate: NONE
     db-type: mysql
     migration:
       enabled: true
+
+flyway:
+  datasources:
+    default:
+      enabled: true
+      # Use the same URL as the datasource
+      url: jdbc:tc:mysql:8.0.32:///testdb
+      user: root
+      password: root
+      locations: classpath:db/migration  # Location for your Flyway migration scripts
