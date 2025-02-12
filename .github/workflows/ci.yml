@@ -20,6 +20,13 @@ jobs:
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping --silent" --health-start-period=10s --health-timeout=5s --health-retries=5
+        # Wait for MySQL service to be ready and create the database
+        run: |
+          until mysql -h localhost -u root -proot -e "SELECT 1"; do
+            echo "Waiting for MySQL to be ready..."
+            sleep 3
+          done
+          mysql -h localhost -u root -proot -e "CREATE DATABASE IF NOT EXISTS testdb;"  # Create testdb
 
     steps:
       - name: Checkout repository
